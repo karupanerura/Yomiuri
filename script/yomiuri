@@ -1,0 +1,7 @@
+#!perl
+use strict;
+use warnings;
+use utf8;
+
+use Yomiuri::Runner;
+Yomiuri::Runner->new(@ARGV)->run;

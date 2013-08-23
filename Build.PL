@@ -23,8 +23,8 @@ my %args = (
         'Module::Build' => 0.38,
     },
 
-    name            => 'App-Yomiuri',
-    module_name     => 'App::Yomiuri',
+    name            => 'Yomiuri',
+    module_name     => 'Yomiuri',
     allow_pureperl => 0,
 
     script_files => [glob('script/*'), glob('bin/*')],

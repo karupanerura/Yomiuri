@@ -1,14 +1,14 @@
 # NAME
 
-App::Yomiuri - It's new $module
+Yomiuri - It's new $module
 
 # SYNOPSIS
 
-    use App::Yomiuri;
+    use Yomiuri;
 
 # DESCRIPTION
 
-App::Yomiuri is ...
+Yomiuri is ...
 
 # LICENSE
 
