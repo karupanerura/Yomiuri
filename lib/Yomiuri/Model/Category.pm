@@ -8,6 +8,7 @@ use parent qw/ Yomiuri::Model /;
 sub add {
     my ($self, $name) = @_;
     $self->{$name} = 1;
+    $self->save;
 }
 
 sub list {
@@ -18,6 +19,7 @@ sub list {
 sub remove {
     my ($self, $name) = @_;
     delete $self->{$name};
+    $self->save;
 }
 
 1;

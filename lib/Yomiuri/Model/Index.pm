@@ -21,6 +21,8 @@ sub add {
             md5  => md5_file($file),
         };
     }
+
+    $self->save;
 }
 
 sub is_exists {

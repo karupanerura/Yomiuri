@@ -11,35 +11,23 @@ use Yomiuri::Utils qw/write_file read_file search_project_dir YOMIURI_REPOSITORY
 
 my $json = JSON->new->ascii(1);
 
-sub dir  { File::Spec->catfile($_[0]->project_dir, YOMIURI_REPOSITORY_DIR()) }
-sub path { File::Spec->catfile($_[0]->dir,         $_[0]->file) }
+sub dir  { File::Spec->catfile(search_project_dir(), YOMIURI_REPOSITORY_DIR()) }
+sub path { File::Spec->catfile($_[0]->dir,           $_[0]->file) }
 
 sub file {
     my $invocant = shift;
     my $class    = ref $invocant || $invocant;
 
+    die "${class}::file is abstruct method. cannot use direct." if $class eq __PACKAGE__;
     (my $name = $class) =~ s/^\QYomiuri::Model:://;
 
     my $file = sprintf '%s.json', decamelize($name);
     {
-        no strict 'refs';
+        no strict 'refs'; ## no critic
         *{"${class}::file"} = sub { $file };
     }
 
     return $file;
-}
-
-sub project_dir {
-    my $invocant    = shift;
-    my $project_dir = search_project_dir();
-
-    my $class = ref $invocant || $invocant;
-    {
-        no strict 'refs';
-        *{"${class}::project_dir"} = sub { $project_dir };
-    }
-
-    return $project_dir;
 }
 
 sub default { +{} }

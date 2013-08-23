@@ -67,21 +67,26 @@ sub read_file {
 
 sub md5_file { Digest::MD5::md5_base64(read_file(@_)) }
 
-sub search_project_dir {
-    my $cwd     = getcwd();
-    my $repodir = File::Spec->catfile($cwd, YOMIURI_REPOSITORY_DIR);
-    return $cwd if -d $repodir;
+{
+    my $PROJECT_DIR;
+    sub search_project_dir {
+        return $PROJECT_DIR if defined $PROJECT_DIR;
 
-    my @directories = File::Spec->splitdir($cwd);
-    while (@directories and not -d $repodir) {
+        my $cwd     = getcwd();
+        my $repodir = File::Spec->catfile($cwd, YOMIURI_REPOSITORY_DIR);
+        return $PROJECT_DIR = $cwd if -d $repodir;
+
+        my @directories = File::Spec->splitdir($cwd);
+        while (@directories and not -d $repodir) {
+            pop @directories;
+            $cwd = File::Spec->catdir(@directories);
+            $repodir = File::Spec->catfile($cwd, YOMIURI_REPOSITORY_DIR);
+        }
+        die "not in project dir. (cwd: @{[ getcwd() ]})" unless -d $repodir;
+
         pop @directories;
-        $cwd = File::Spec->catdir(@directories);
-        $repodir = File::Spec->catfile($cwd, YOMIURI_REPOSITORY_DIR);
+        return $PROJECT_DIR = File::Spec->canonpath(File::Spec->catdir(@directories));
     }
-    die "not in project dir. (cwd: @{[ getcwd() ]})" unless -d $repodir;
-
-    pop @directories;
-    return File::Spec->canonpath(File::Spec->catdir(@directories));
 }
 
 1;

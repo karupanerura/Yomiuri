@@ -33,8 +33,17 @@ sub cmd {
 }
 
 sub view {
-    my $self = shift;
-    return $self->{__instance_cache}{view} ||= Yomiuri::View->make_instance($self);
+    my $invocant = shift;
+    my $class    = ref $invocant || $invocant;
+
+    my $view = Yomiuri::View->make_instance($class);
+    {
+        no strict 'refs'; ## no critic
+        no warnings 'redefine';
+        *{"${class}::view"} = sub { $view };
+    }
+
+    return $view;
 }
 
 1;
