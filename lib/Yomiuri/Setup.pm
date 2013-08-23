@@ -8,7 +8,7 @@ use Class::Accessor::Lite
     new => 1;
 
 use Git::Repository;
-use Yomiuri::Utils qw/write_file REPOSITORY_DIR/;
+use Yomiuri::Utils qw/write_file YOMIURI_REPOSITORY_DIR/;
 
 sub mkdir :method {
     my $self = shift;
@@ -31,7 +31,7 @@ sub run {
 
     # mkdir
     $self->mkdir();
-    $self->mkdir(REPOSITORY_DIR);
+    $self->mkdir(YOMIURI_REPOSITORY_DIR);
 
     # setup
     $self->setup_config();
@@ -45,7 +45,7 @@ sub setup_config {
     my $self = shift;
 
     my $data = $self->flavor->get('config.toml');
-    $self->write([REPOSITORY_DIR, 'config.toml'] => $data);
+    $self->write([YOMIURI_REPOSITORY_DIR, 'config.toml'] => $data);
 }
 
 sub setup_git {

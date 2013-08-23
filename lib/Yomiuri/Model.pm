@@ -7,11 +7,11 @@ use JSON 2;
 use File::Spec;
 use String::CamelCase qw/decamelize/;
 
-use Yomiuri::Utils qw/write_file read_file search_project_dir REPOSITORY_DIR/;
+use Yomiuri::Utils qw/write_file read_file search_project_dir YOMIURI_REPOSITORY_DIR/;
 
 my $json = JSON->new->ascii(1);
 
-sub dir  { File::Spec->catfile($_[0]->project_dir, REPOSITORY_DIR()) }
+sub dir  { File::Spec->catfile($_[0]->project_dir, YOMIURI_REPOSITORY_DIR()) }
 sub path { File::Spec->catfile($_[0]->dir,         $_[0]->file) }
 
 sub file {

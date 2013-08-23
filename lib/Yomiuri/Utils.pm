@@ -4,7 +4,7 @@ use warnings;
 use utf8;
 
 use parent qw/Exporter/;
-our @EXPORT = qw/dist_share encoding touch write_file read_file md5_file search_project_dir REPOSITORY_DIR/;
+our @EXPORT = qw/dist_share encoding touch write_file read_file md5_file search_project_dir YOMIURI_REPOSITORY_DIR/;
 
 use Encode;
 use Cwd qw/getcwd realpath/;
@@ -17,7 +17,7 @@ use constant BASE_PATH => $ENV{KAWARA_PRODUCTION} ?
     dist_dir('Yomiuri'):
     realpath( File::Spec->rel2abs('../../share', dirname(__FILE__)) );
 
-use constant REPOSITORY_DIR => '.yomiuri';
+use constant YOMIURI_REPOSITORY_DIR => '.yomiuri';
 
 sub dist_share {
     return File::Spec->catfile(BASE_PATH, @_);
@@ -69,14 +69,14 @@ sub md5_file { Digest::MD5::md5_base64(read_file(@_)) }
 
 sub search_project_dir {
     my $cwd     = getcwd();
-    my $repodir = File::Spec->catfile($cwd, REPOSITORY_DIR);
+    my $repodir = File::Spec->catfile($cwd, YOMIURI_REPOSITORY_DIR);
     return $cwd if -d $repodir;
 
     my @directories = File::Spec->splitdir($cwd);
     while (@directories and not -d $repodir) {
         pop @directories;
         $cwd = File::Spec->catdir(@directories);
-        $repodir = File::Spec->catfile($cwd, REPOSITORY_DIR);
+        $repodir = File::Spec->catfile($cwd, YOMIURI_REPOSITORY_DIR);
     }
     die "not in project dir. (cwd: @{[ getcwd() ]})" unless -d $repodir;
 
