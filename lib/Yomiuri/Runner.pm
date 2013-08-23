@@ -8,6 +8,7 @@ use Config;
 use Getopt::Compact::WithCmd ();
 use String::CamelCase qw/camelize/;
 use List::MoreUtils qw/apply/;
+use Yomiuri::Cmd::Repository;
 
 use Class::Accessor::Lite ro => [qw/getopt/];
 
@@ -89,7 +90,7 @@ sub run {
         my $yomiuri = Yomiuri->bootstrap();
         my ($cmd, @sub_methods) = apply { tr/-/_/ } @{$self->getopt->commands};
         my $run_method = pop @sub_methods;
-        unless ($run_method) {
+        if (!$run_method && Yomiuri::Cmd::Repository->can($cmd)) {
             $run_method = $cmd;
             $cmd        = 'repository';
         }
