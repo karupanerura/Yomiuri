@@ -47,7 +47,7 @@ sub getopt_parser {
             },
             category => +{
                 desc           => 'category edit.',
-                args           => 'add|remove',
+                args           => 'add|list|remove',
                 command_struct => +{
                     add => +{
                         desc => 'add category.',
@@ -59,6 +59,24 @@ sub getopt_parser {
                     },
                     remove => +{
                         desc => 'remove category.',
+                        args => 'name',
+                    },
+                },
+            },
+            entry => +{
+                desc           => 'entry edit.',
+                args           => 'add|list|remove',
+                command_struct => +{
+                    add => +{
+                        desc => 'add entry.',
+                        args => 'name',
+                    },
+                    list => +{
+                        desc => 'list entry.',
+                        args => '',
+                    },
+                    remove => +{
+                        desc => 'remove entry.',
                         args => 'name',
                     },
                 },

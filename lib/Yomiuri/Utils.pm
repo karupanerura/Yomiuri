@@ -4,7 +4,17 @@ use warnings;
 use utf8;
 
 use parent qw/Exporter/;
-our @EXPORT = qw/dist_share encoding touch write_file read_file md5_file search_project_dir YOMIURI_REPOSITORY_DIR/;
+our @EXPORT = qw/
+    dist_share
+    encoding
+    touch
+    write_file
+    read_file
+    md5_file
+    to_project_relative_path
+    search_project_dir
+    YOMIURI_REPOSITORY_DIR
+/;
 
 use Encode;
 use Cwd qw/getcwd realpath/;
@@ -12,6 +22,7 @@ use File::Basename qw/dirname/;
 use File::ShareDir qw/dist_dir/;
 use File::Spec;
 use Scalar::Util qw/blessed/;
+use Digest::MD5;
 
 use constant BASE_PATH => $ENV{KAWARA_PRODUCTION} ?
     dist_dir('Yomiuri'):
@@ -65,7 +76,15 @@ sub read_file {
     return $data;
 }
 
-sub md5_file { Digest::MD5::md5_base64(read_file(@_)) }
+sub md5_file {
+    local $Yomiuri::Utils::ENCODING;
+    return Digest::MD5::md5_base64(read_file(@_));
+}
+
+sub to_project_relative_path {
+    my $path = shift;
+    return File::Spec->abs2rel(File::Spec->rel2abs($path), search_project_dir());
+}
 
 {
     my $PROJECT_DIR;

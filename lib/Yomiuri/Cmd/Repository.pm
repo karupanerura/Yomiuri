@@ -8,6 +8,7 @@ use parent qw/Yomiuri::Cmd/;
 use Cwd qw/getcwd/;
 use File::Spec;
 
+use Yomiuri;
 use Yomiuri::Setup;
 use Yomiuri::Flavor;
 
@@ -18,6 +19,7 @@ sub create {
     my $flavor_name = $opts->{flavor} || 'Default';
     my $flavor      = Yomiuri::Flavor->new($flavor_name => +{
         dir => $dir,
+        ver => $Yomiuri::VERSION,
     });
 
     Yomiuri::Setup->new(

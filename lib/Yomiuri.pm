@@ -14,12 +14,6 @@ use File::Spec;
 use Yomiuri::Config;
 use Yomiuri::View;
 
-sub new {
-    my $class = shift;
-    my $self  = $class->SUPER::new(@_);
-    return $self;
-}
-
 sub load_config { Yomiuri::Config->load_file(shift->load_config_from) }
 sub load_config_from { File::Spec->catfile('.yomiuri', 'config.toml') }
 

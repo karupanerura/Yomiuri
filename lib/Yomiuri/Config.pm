@@ -54,12 +54,12 @@ sub merge_default {
     };
 }
 
-sub MERGE_htdocs {
+sub MERGE_repository {
     my ($class, $base, $child) = @_;
     my %child = %$child; ## shallow copy
 
     # array
-    for my $key (qw/path/) {
+    for my $key (qw/htdocs/) {
         next unless exists $child{$key};
         $base->{$key} = [
             @{ delete $child{$key} },
@@ -101,8 +101,8 @@ sub default {
             time_format     => '%H:%M:%S',
             datetime_format => '%Y-%m-%dT%H:%M:%S%z', ## ISO 8601
         },
-        htdocs   => +{
-            path     => [dist_share('htdocs')],
+        repository   => +{
+            htdocs   => [dist_share('htdocs')],
         },
         template => +{
             path     => [dist_share('template')],

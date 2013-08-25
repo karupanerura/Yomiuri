@@ -24,7 +24,7 @@ sub xslate {
             path  => [
                 map {
                     Data::Section::Simple->new($_)->get_data_section()
-                } reverse @{ mro::get_linear_isa(ref $self) }
+                } @{ mro::get_linear_isa(ref $self) }
             ],
         );
     };
@@ -60,6 +60,8 @@ datetime_format = "%Y-%m-%dT%H:%M:%S%z"
 [template]
 # using for Text::Xslate constructor setting
 
-[htdocs]
+[repository]
+# repository version
+ver    = <: $ver :>
 # htdocs setting
-path = ['htdocs']
+htdocs = ["htdocs"]

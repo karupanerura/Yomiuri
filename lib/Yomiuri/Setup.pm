@@ -36,6 +36,8 @@ sub run {
     # setup
     $self->setup_config();
     $self->setup_htdocs();
+    $self->setup_entry();
+    $self->setup_template();
     $self->setup_git();
 
     return $self;
@@ -60,6 +62,18 @@ sub setup_htdocs {
     my $self = shift;
     $self->mkdir('htdocs');
     $self->touch('htdocs', '.gitkeep');
+}
+
+sub setup_entry {
+    my $self = shift;
+    $self->mkdir('entry');
+    $self->touch('entry', '.gitkeep');
+}
+
+sub setup_template {
+    my $self = shift;
+    $self->mkdir('template');
+    $self->touch('template', '.gitkeep');
 }
 
 1;
