@@ -41,6 +41,7 @@ sub run {
 
     # setup
     $self->setup_config();
+    $self->setup_psgi();
     $self->setup_htdocs();
     $self->setup_entry();
     $self->setup_template();
@@ -54,6 +55,13 @@ sub setup_config {
 
     my $data = $self->flavor->get('config.toml');
     $self->write([YOMIURI_REPOSITORY_DIR, 'config.toml'] => $data);
+}
+
+sub setup_psgi {
+    my $self = shift;
+
+    my $data = $self->flavor->get('app.psgi');
+    $self->write([YOMIURI_REPOSITORY_DIR, 'app.psgi'] => $data);
 }
 
 sub setup_git {

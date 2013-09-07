@@ -22,9 +22,6 @@ sub load {
     my ($config, $err) = TOML::from_toml($source);
     die $err if defined $err;
 
-    use Data::Dumper;
-    warn Dumper $config;
-
     my $config_class = exists $config->{config_class} ?
         delete $config->{config_class}:
         'Yomiuri::Config';

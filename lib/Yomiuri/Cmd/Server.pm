@@ -5,26 +5,15 @@ use utf8;
 
 use parent qw/Yomiuri::Cmd/;
 
-use Plack::Builder;
 use Plack::Loader;
+use Plack::Util;
 use Yomiuri::Web;
 
 sub run {
     my ($self, $opts) = @_;
     my $config = $self->c->config;
 
-    my $app = builder {
-        enable_if { $_[0]->{REMOTE_ADDR} eq '127.0.0.1' } 'ReverseProxy' if $config->{web}->{enable_reverse_proxy};
-        if ($config->{web}->{enable_static}) {
-            enable 'Static' => (
-                path => qr{^/(?:img|css|js|meta)/},
-                root => $config->{repository}->{htdocs},
-            );
-        }
-
-        Yomiuri::Web->to_app();
-    };
-
+    my $app = Plack::Util::load_psgi( Yomiuri::Web->psgi_path() );
     Plack::Loader->auto(%{ $config->{web}->{plackup} })->run($app);
 }
 

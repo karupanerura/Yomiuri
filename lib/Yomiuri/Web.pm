@@ -6,6 +6,7 @@ use utf8;
 use parent qw/Yomiuri Amon2::Web/;
 
 use File::Spec;
+use Yomiuri::Utils ();
 
 # dispatcher
 use Yomiuri::Web::Dispatcher;
@@ -15,6 +16,8 @@ sub dispatch {
 
 # setup view
 sub create_view { shift->view }
+
+sub psgi_path { File::Spec->catfile(Yomiuri::Utils::search_project_dir(), '.yomiuri', 'app.psgi') }
 
 # load plugins
 __PACKAGE__->load_plugins(

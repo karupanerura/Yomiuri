@@ -32,9 +32,7 @@ datetime_format = "%Y-%m-%dT%H:%M:%S%z"
 : block web -> {
 [web]
 # preview web server settings
-bind                 = "127.0.0.1:3000"
-enable_reverse_proxy = false # true  if using reverse proxy. see also: Plack::Middleware::ReverseProxy
-enable_static        = true  # false if using static another content server.
+bind = "127.0.0.1:3000"
 : }
 
 : block template -> {
@@ -49,3 +47,23 @@ version = <: $ver :>
 # htdocs setting
 htdocs  = "htdocs"
 : }
+
+@@ app.psgi.tx
+use strict;
+use warnings;
+use utf8;
+
+use Yomiuri::Web;
+use Plack::Builder;
+
+my $config = Yomiuri::Web->config;
+builder {
+    : block middlewate -> {
+    enable_if { $_[0]->{REMOTE_ADDR} eq '127.0.0.1' } 'ReverseProxy';
+    enable 'Static' => (
+        path => qr{^/(?:img|css|js|meta)/},
+        root => $config->{repository}->{htdocs},
+    );
+    : }
+    Yomiuri::Web->to_app();
+};
