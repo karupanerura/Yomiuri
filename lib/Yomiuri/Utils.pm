@@ -24,7 +24,7 @@ use File::Spec;
 use Scalar::Util qw/blessed/;
 use Digest::MD5;
 
-use constant BASE_PATH => $ENV{KAWARA_PRODUCTION} ?
+use constant BASE_PATH => $ENV{YOMIURI_PRODUCTION} ?
     dist_dir('Yomiuri'):
     realpath( File::Spec->rel2abs('../../share', dirname(__FILE__)) );
 

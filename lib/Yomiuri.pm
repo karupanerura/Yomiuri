@@ -11,11 +11,12 @@ use Cwd;
 use Class::Load qw/load_class/;
 use File::Spec;
 
-use Yomiuri::Config;
+use Yomiuri::Config::Loader;
 use Yomiuri::View;
+use Yomiuri::Utils ();
 
-sub load_config { Yomiuri::Config->load_file(shift->load_config_from) }
-sub load_config_from { File::Spec->catfile('.yomiuri', 'config.toml') }
+sub load_config      { Yomiuri::Config::Loader->load_file(shift->load_config_from) }
+sub load_config_from { File::Spec->catfile(Yomiuri::Utils::search_project_dir(), '.yomiuri', 'config.toml') }
 
 sub cmd {
     my ($self, $cmd) = @_;

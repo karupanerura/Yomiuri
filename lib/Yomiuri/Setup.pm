@@ -8,11 +8,15 @@ use Class::Accessor::Lite
     new => 1;
 
 use Git::Repository;
+use Log::Minimal;
 use Yomiuri::Utils qw/write_file YOMIURI_REPOSITORY_DIR/;
 
 sub mkdir :method {
     my $self = shift;
-    mkdir File::Spec->catfile($self->dir, @_);
+    my $dir  = File::Spec->catfile($self->dir, @_);
+
+    infof "[mkdir]\t$dir";
+    mkdir $dir;
 }
 
 sub touch {
@@ -23,6 +27,8 @@ sub touch {
 sub write :method {
     my ($self, $pathlist, $data) = @_;
     my $path = File::Spec->catfile($self->dir, @$pathlist);
+
+    infof "[write]\t$path";
     write_file($path, $data);
 }
 
@@ -53,8 +59,11 @@ sub setup_config {
 sub setup_git {
     my $self = shift;
 
+    infof "[git]\tinit";
     Git::Repository->run(init => $self->dir);
+
     my $git = Git::Repository->new(work_tree => $self->dir);
+    infof "[git]\tadd .";
     $git->run(add => '.');
 }
 

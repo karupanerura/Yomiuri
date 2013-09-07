@@ -42,26 +42,3 @@ sub get {
 }
 
 1;
-__DATA__
-@@ config.toml.tx
-[datetime]
-# using for timestamp.
-# time_zone:       time_zone for DateTime.      see also: perldoc DateTime::TimeZone
-# locale:          locale for DateTime.         see also: perldoc DateTime::Locale
-# date_format:     stftime format for DateTime. see also: perldoc DateTime
-# time_format:     stftime format for DateTime. see also: perldoc DateTime
-# datetime_format: stftime format for DateTime. see also: perldoc DateTime
-time_zone       = "Asia/Tokyo"
-locale          = "ja"
-date_format     = "%Y-%m-%d"
-time_format     = "%H:%M:%S"
-datetime_format = "%Y-%m-%dT%H:%M:%S%z"
-
-[template]
-# using for Text::Xslate constructor setting
-
-[repository]
-# repository version
-ver    = <: $ver :>
-# htdocs setting
-htdocs = ["htdocs"]

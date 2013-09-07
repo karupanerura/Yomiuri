@@ -3,5 +3,10 @@ use strict;
 use warnings;
 use utf8;
 
+local $ENV{YOMIURI_PRODUCTION} = $ENV{YOMIURI_PRODUCTION};
+BEGIN {
+    $ENV{YOMIURI_PRODUCTION} = 1 unless $ENV{YOMIURI_DEVELOPMENT};
+};
+
 use Yomiuri::Runner;
 Yomiuri::Runner->new(@ARGV)->run;

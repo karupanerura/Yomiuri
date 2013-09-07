@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    : block head -> {
+    <meta charset="UTF-8" />
+    <title><: $title || (config())["blog"]["title"] :></title>
+    <meta name="description" content="<: $description || (config())["blog"]["description"] :>" />
+    <link rel="alternate" href="/rss.xml" type="application/rss+xml" title="<: $title || (config())["blog"]["title"] :>" />
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="16x16" />
+    <link rel="stylesheet" href="/css/style.css" type="text/css" />
+    : }
+  </head>
+  <body>
+    : block body -> {
+    <h1><: $title || (config())["blog"]["title"] :></h1>
+    <small><: $description || (config())["blog"]["description"] :></small>
+    : }
+  </body>
+</html>

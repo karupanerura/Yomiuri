@@ -3,11 +3,14 @@ use strict;
 use warnings;
 use utf8;
 
-use Yomiuri;
 use Config;
 use Getopt::Compact::WithCmd ();
 use String::CamelCase qw/camelize/;
 use List::MoreUtils qw/apply/;
+use Term::ANSIColor;
+use Log::Minimal;
+
+use Yomiuri;
 use Yomiuri::Cmd::Repository;
 
 use Class::Accessor::Lite ro => [qw/getopt/];
@@ -29,6 +32,7 @@ sub getopt_parser {
         global_struct => [
             [ [qw/help h/],    'print help.',    '!', undef, +{} ],
             [ [qw/version v/], 'print version.', '!', undef, +{} ],
+            [ [qw/no-color/],  'no color.',      '!', undef, +{} ],
         ],
         command_struct => +{
             create => +{
@@ -98,6 +102,24 @@ sub new {
 sub run {
     my $self = shift;
 
+    local $Log::Minimal::COLOR = !$self->getopt->opts->{'no-color'} ? 1 : 0;
+    local $Log::Minimal::PRINT = sub {
+        my ($time, $type, $message, $trace, $raw_message) = @_;
+
+        unless ($Log::Minimal::COLOR) {
+            my $lc_type = lc($type);
+            $type = Term::ANSIColor::color($Log::Minimal::DEFAULT_COLOR->{$lc_type}->{text})
+                . $type . Term::ANSIColor::color('reset')
+                    if $Log::Minimal::DEFAULT_COLOR->{$lc_type}->{text};
+            $type = Term::ANSIColor::color("on_$Log::Minimal::DEFAULT_COLOR->{$lc_type}->{background}")
+                . $type . Term::ANSIColor::color('reset')
+                    if $Log::Minimal::DEFAULT_COLOR->{$lc_type}->{background};
+        }
+
+        $message =~ s/\\t/\x09/g;
+        printf "%s [%s] %s\n", $time, $type, $message;
+    };
+
     if ($self->getopt->opts->{help}) {
         print $self->getopt->usage unless $self->getopt->is_success;
     }
@@ -108,9 +130,14 @@ sub run {
         my $yomiuri = Yomiuri->bootstrap();
         my ($cmd, @sub_methods) = apply { tr/-/_/ } @{$self->getopt->commands};
         my $run_method = pop @sub_methods;
-        if (!$run_method && Yomiuri::Cmd::Repository->can($cmd)) {
-            $run_method = $cmd;
-            $cmd        = 'repository';
+        if (!$run_method) {
+            if (Yomiuri::Cmd::Repository->can($cmd)) {
+                $run_method = $cmd;
+                $cmd        = 'repository';
+            }
+            else {
+                $run_method = 'run';
+            }
         }
 
         my $current = $yomiuri->cmd( camelize($cmd) );
