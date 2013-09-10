@@ -8,5 +8,8 @@ BEGIN {
     $ENV{YOMIURI_PRODUCTION} = 1 unless $ENV{YOMIURI_DEVELOPMENT};
 };
 
+use open ':utf8';
+use open ':std';
+
 use Yomiuri::Runner;
 Yomiuri::Runner->new(@ARGV)->run;
