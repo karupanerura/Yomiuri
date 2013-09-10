@@ -4,6 +4,7 @@ use warnings;
 use utf8;
 
 use Text::Markdown::Discount;
+Text::Markdown::Discount::with_html5_tags();
 
 use Yomiuri::Utils;
 
@@ -34,7 +35,7 @@ sub extract_titles_by_markdown {
 
 sub convert_to_html {
     my ($class, $text) = @_;
-    return Text::Markdown::Discount::with_html5_tags($text);
+    return Text::Markdown::Discount::markdown($text);
 }
 
 1;

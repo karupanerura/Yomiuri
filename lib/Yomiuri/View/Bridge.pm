@@ -6,6 +6,9 @@ use warnings;
 use parent qw/ Text::Xslate::Bridge /;
 
 use Amon2::Declare;
+use Text::Xslate::Util;
+
+use Yomiuri::Markdown;
 
 __PACKAGE__->bridge(
     # nil      => \%nil_methods,
@@ -13,7 +16,8 @@ __PACKAGE__->bridge(
     # array    => \%array_methods,
     # hash     => \%hash_methods,
     function => +{
-        config => sub { c()->config },
+        config   => sub { c()->config },
+        markdown => html_builder { Yomiuri::Markdown->convert_to_html(@_) },
     },
 );
 
