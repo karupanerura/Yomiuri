@@ -41,6 +41,12 @@ sub view {
     return $view;
 }
 
+sub render {
+    my ($self, $tmpl, $args) = @_;
+    $args ||= +{};
+    return $self->view->render($tmpl, $args);
+}
+
 1;
 __END__
 
