@@ -31,8 +31,10 @@ datetime_format = "%Y-%m-%dT%H:%M:%S%z"
 
 : block web -> {
 [web]
+[web.plackup]
 # preview web server settings
-bind = "127.0.0.1:3000"
+host = "127.0.0.1"
+port = 3000
 : }
 
 : block template -> {

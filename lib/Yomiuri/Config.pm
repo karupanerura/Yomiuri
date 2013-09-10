@@ -94,8 +94,6 @@ sub DEFAULT {
                 host => '127.0.0.1',
                 port => 5000,
             },
-            enable_reverse_proxy => 0,
-            enable_static        => 1,
         },
         template => +{
             path     => [Yomiuri::Utils::dist_share('template')],
