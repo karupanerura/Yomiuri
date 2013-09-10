@@ -62,7 +62,7 @@ sub is_changed {
 
 sub list {
     my $self = shift;
-    return @{ $self->{list} };
+    return map { +{ %$_ } } @{ $self->{list} };
 }
 
 1;

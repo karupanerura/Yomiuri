@@ -1,1 +1,8 @@
 : cascade base
+: after body -> {
+<ul class="entry">
+:   for $entries -> $entry {
+<li><: $entry.title :></li>
+:   }
+</ul>
+: }
