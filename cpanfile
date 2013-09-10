@@ -10,6 +10,7 @@ requires 'Getopt::Compact::WithCmd';
 requires 'Git::Repository';
 requires 'JSON', '2';
 requires 'List::MoreUtils';
+requires 'Log::Minimal';
 requires 'Module::Find';
 requires 'Module::Functions';
 requires 'Router::Simple::Declare';
@@ -18,6 +19,7 @@ requires 'String::CamelCase';
 requires 'TOML';
 requires 'Text::Xslate', '1.6001';
 requires 'Text::Xslate::Bridge';
+requires 'Text::Markdown::Discount';
 requires 'parent';
 requires 'perl', '5.008005';
 
