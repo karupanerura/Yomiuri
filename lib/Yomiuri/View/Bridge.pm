@@ -6,7 +6,7 @@ use warnings;
 use parent qw/ Text::Xslate::Bridge /;
 
 use Amon2::Declare;
-use Text::Xslate::Util;
+use Text::Xslate::Util qw/html_builder/;
 
 use Yomiuri::Markdown;
 
