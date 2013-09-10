@@ -65,5 +65,13 @@ sub list {
     return map { +{ %$_ } } @{ $self->{list} };
 }
 
+sub remove {
+    my ($self, $file) = @_;
+    my $index = $self->get_by_file($file);
+
+    delete $self->{list}->[$index->{id}-1];
+    $self->save;
+}
+
 1;
 __END__
