@@ -40,6 +40,7 @@ port = 3000
 : block template -> {
 [template]
 # using for Text::Xslate constructor setting
+path = ["template"]
 : }
 
 : block repository -> {
