@@ -8,13 +8,13 @@ Text::Markdown::Discount::with_html5_tags();
 
 use Yomiuri::Utils;
 
-sub extract_title_by_file {
+sub extract_title_from_file {
     my ($class, $file) = @_;
     my $markdown = read_file($file);
     return $class->extract_title_by_markdown($markdown);
 }
 
-sub extract_titles_by_file {
+sub extract_titles_from_file {
     my ($class, $file) = @_;
     my $markdown = read_file($file);
     return $class->extract_titles_by_markdown($markdown);
@@ -31,6 +31,12 @@ sub extract_titles_by_markdown {
 
     die 'cannot extract title.' unless @title;
     return @title;
+}
+
+sub convert_to_html_from_file {
+    my ($class, $file) = @_;
+    my $markdown = read_file($file);
+    return $class->convert_to_html($markdown);
 }
 
 sub convert_to_html {

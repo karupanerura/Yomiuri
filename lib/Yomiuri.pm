@@ -2,6 +2,7 @@ package Yomiuri;
 use 5.008005;
 use strict;
 use warnings;
+use utf8;
 
 our $VERSION = "0.01";
 
@@ -39,12 +40,6 @@ sub view {
     }
 
     return $view;
-}
-
-sub render {
-    my ($self, $tmpl, $args) = @_;
-    $args ||= +{};
-    return $self->view->render($tmpl, $args);
 }
 
 1;

@@ -2,7 +2,12 @@
 : after body -> {
 <ul class="entry">
 :   for $entries -> $entry {
-<li><: $entry.title :></li>
+  <li>
+    <article>
+      <h2><a href="<: cool_uri_for(['entry', $entry.id], { md5 => $entry.md5 }) :>"><: $entry.title :></a></h2>
+      <: markdown_from_file($entry.file) :>
+    </article>
+  </li>
 :   }
 </ul>
 : }

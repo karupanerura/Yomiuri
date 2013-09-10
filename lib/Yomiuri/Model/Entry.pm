@@ -20,7 +20,7 @@ sub add {
         my $md5 = md5_file($file);
         if ($index->{md5} ne $md5) {
             $index->{md5}   = $md5;
-            $index->{title} = Yomiuri::Markdown->extract_title_by_file($file);
+            $index->{title} = Yomiuri::Markdown->extract_title_from_file($file);
         }
         $id = $index->{id};
     }
@@ -29,7 +29,7 @@ sub add {
             id    => scalar(@{ $self->{list} }) + 1,
             file  => $file,
             md5   => md5_file($file),
-            title => Yomiuri::Markdown->extract_title_by_file($file),
+            title => Yomiuri::Markdown->extract_title_from_file($file),
         };
         $id = $self->{list}->[-1]->{id};
     }
