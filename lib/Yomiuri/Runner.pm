@@ -11,6 +11,7 @@ use Term::ANSIColor;
 use Log::Minimal;
 
 use Yomiuri;
+use Yomiuri::CLI;
 use Yomiuri::Cmd::Repository;
 
 use Class::Accessor::Lite ro => [qw/getopt/];
@@ -127,7 +128,7 @@ sub run {
         print $self->version_message();
     }
     else {
-        my $yomiuri = Yomiuri->bootstrap();
+        my $yomiuri = Yomiuri::CLI->bootstrap();
         my ($cmd, @sub_methods) = apply { tr/-/_/ } @{$self->getopt->commands};
         my $run_method = pop @sub_methods;
         if (!$run_method) {
