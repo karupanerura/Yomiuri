@@ -15,14 +15,17 @@ sub add {
     my ($self, $file) = @_;
     $file = to_project_relative_path($file);
 
-    my $id;
+    my $status;
     if (my $index = $self->get_by_file($file)) {
         my $md5 = md5_file($file);
         if ($index->{md5} ne $md5) {
+            # refetch for get not shallow copied hash object
+            $index = $self->get_by_id($index->{id});
+
             $index->{md5}   = $md5;
             $index->{title} = Yomiuri::Markdown->extract_title_from_file($file);
+            $status = 'modified';
         }
-        $id = $index->{id};
     }
     else {
         push @{ $self->{list} } => +{
@@ -31,11 +34,11 @@ sub add {
             md5   => md5_file($file),
             title => Yomiuri::Markdown->extract_title_from_file($file),
         };
-        $id = $self->{list}->[-1]->{id};
+        $status = 'added';
     }
 
     $self->save;
-    return $id;
+    return $status;
 }
 
 sub get_by_id {

@@ -5,6 +5,7 @@ use utf8;
 
 use parent qw/Yomiuri::Cmd/;
 
+use Log::Minimal qw/infof/;
 use Yomiuri::Model::Entry;
 
 sub model {
@@ -13,9 +14,12 @@ sub model {
 }
 
 sub add {
-    my ($self, $opts, $file) = @_;
-    die "$file not found." unless -f $file;
-    $self->model->add($file);
+    my ($self, $opts, @files) = @_;
+    for my $file (@files) {
+        die "$file not found." unless -f $file;
+        my $status = $self->model->add($file);
+        infof "[%s]\t%s", $status, $file if $status;
+    }
 }
 
 sub list {
@@ -24,8 +28,10 @@ sub list {
 }
 
 sub remove {
-    my ($self, $opts, $name) = @_;
-    $self->model->remove($name);
+    my ($self, $opts, @files) = @_;
+    for my $file (@files) {
+        $self->model->remove($file);
+    }
 }
 
 1;
