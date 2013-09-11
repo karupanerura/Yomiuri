@@ -14,7 +14,5 @@ sub index :method {
     });
 }
 
-
-
 1;
 __END__

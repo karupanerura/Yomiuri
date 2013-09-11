@@ -85,6 +85,9 @@ sub setup_entry {
     my $self = shift;
     $self->mkdir('entry');
     $self->touch('entry', '.gitkeep');
+
+    my $data = $self->flavor->get('sample.md');
+    $self->write(['entry', 'sample.md'] => $data);
 }
 
 sub setup_template {

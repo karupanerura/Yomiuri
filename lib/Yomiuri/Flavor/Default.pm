@@ -70,3 +70,18 @@ builder {
     : }
     Yomiuri::Web->to_app();
 };
+
+@@ sample.md.tx
+This is sample entry.
+==============================
+
+Hi. This is sample weblog entry of Yomiuri.
+
+# h1
+## h2
+### h3
+hellooooooooooooooo!!!!!
+
+yeah!!!!!!!!!!!!!!!!!!!!!!!!
+-----------------------------
+goodbye!!!
