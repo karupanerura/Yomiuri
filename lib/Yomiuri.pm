@@ -21,7 +21,7 @@ sub load_config_from { File::Spec->catfile(Yomiuri::Utils::search_project_dir(),
 
 sub cmd {
     my ($self, $cmd) = @_;
-    return $self->{__instance_cache}{cmd} ||= do {
+    return $self->{__instance_cache}{cmd}{$cmd} ||= do {
         my $klass = sprintf '%s::Cmd::%s', __PACKAGE__, $cmd;
         load_class($klass);
         $klass->new($self);
