@@ -72,6 +72,7 @@ sub remove {
     my ($self, $file) = @_;
     my $index = $self->get_by_file($file);
 
+    return unless $index;
     delete $self->{list}->[$index->{id}-1];
     $self->save;
 }
