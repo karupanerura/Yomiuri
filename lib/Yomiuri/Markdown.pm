@@ -24,13 +24,6 @@ our $META_RX = qr/
     (.+?)            # meta value
     \s*$
 /mx;
-our $META_RX_NO_CAPTURE = qr/
-    ^\s*
-    (?:[-_a-zA-Z0-9]+) # meta key
-    \s*:\s*
-    (?:.+?)            # meta value
-    \s*$
-/mx;
 our $EXTRACT_META_RX = qr/
     \A\s*
     ^-{3,}$
