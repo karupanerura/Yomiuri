@@ -19,7 +19,7 @@ __PACKAGE__->bridge(
     function => +{
         config             => sub { c()->config },
         markdown           => html_builder { Yomiuri::Markdown->convert_to_html(@_) },
-        markdown_from_file => html_builder { Yomiuri::Markdown->convert_to_html_from_file(@_) },
+        markdown_from_file => html_builder { Yomiuri::Markdown->convert_to_html_by_file(@_) },
         uri_for            => \&_uri_for,
         cool_uri_for       => \&_cool_uri_for,
     },

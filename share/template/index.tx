@@ -4,7 +4,7 @@
 :   for $entries -> $entry {
   <li>
     <article>
-      <h2><a href="<: cool_uri_for(['entry', $entry.id], { md5 => $entry.md5 }) :>"><: $entry.title :></a></h2>
+      <h2><a href="<: cool_uri_for(['entry', $entry.name ~ '.html'], { md5 => $entry.md5 }) :>"><: $entry.title :></a></h2>
       <: markdown_from_file($entry.file) :>
     </article>
   </li>

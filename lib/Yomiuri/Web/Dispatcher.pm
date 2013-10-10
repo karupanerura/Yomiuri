@@ -5,11 +5,7 @@ use utf8;
 
 use Amon2::Web::Dispatcher::RouterSimple;
 
-
-use Module::Find qw/useall/;
-useall 'Yomiuri::Web::C';
-
-connect '/'                  => 'Root#index';
-connect '/entry/{id:[0-9]+}' => 'Entry#show';
+connect '/'                                 => 'Root#index';
+connect '/entry/{name:[-_a-zA-Z0-9]+}.html' => 'Entry#show';
 
 1;

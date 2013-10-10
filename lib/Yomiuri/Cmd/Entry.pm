@@ -24,7 +24,7 @@ sub add {
 
 sub list {
     my ($self, $opts) = @_;
-    print "[$_->{id}] $_->{title}\n" for $self->model->list();
+    print "[$_->{id}:$_->{name}] $_->{title}\n" for $self->model->list();
 }
 
 sub remove {

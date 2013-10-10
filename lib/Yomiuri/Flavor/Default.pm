@@ -63,6 +63,7 @@ my $config = Yomiuri::Web->config;
 builder {
     : block middlewate -> {
     enable_if { $_[0]->{REMOTE_ADDR} eq '127.0.0.1' } 'ReverseProxy';
+    enable 'Session::Cookie';
     enable 'Static' => (
         path => qr{^/(?:img|css|js|meta)/},
         root => $config->{repository}->{htdocs},
@@ -72,7 +73,7 @@ builder {
 };
 
 @@ sample.md.tx
-This is sample entry.
+[sample] This is sample entry.
 ==============================
 
 Hi. This is sample weblog entry of Yomiuri.

@@ -6,6 +6,8 @@ use utf8;
 
 use parent qw/Yomiuri/;
 
+use Yomiuri::Web::C;
+
 sub render {
     my ($self, $tmpl, $args) = @_;
     $args ||= +{};

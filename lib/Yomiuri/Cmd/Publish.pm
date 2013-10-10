@@ -7,9 +7,9 @@ use parent qw/Yomiuri::Cmd/;
 
 use File::Spec;
 use File::Find qw/find/;
-use Yomiuri::Utils;
 
-use Yomiuri::Web::C::Root;
+use Yomiuri::Utils;
+use Yomiuri::Model::Entry;
 
 sub run {
     my ($self, $opts) = @_;
@@ -38,7 +38,18 @@ sub render {
 
     my $htdocs = File::Spec->catfile($dir, 'htdocs');
 
+    # index
     write_file(File::Spec->catfile($htdocs, 'index.html'), Yomiuri::Web::C::Root->index($self->c));
+
+    # entry/show
+    my $entry_dir = File::Spec->catfile($htdocs, 'entry');
+    mkdir $entry_dir unless -d $entry_dir;
+    for my $entry (Yomiuri::Model::Entry->new->list) {
+        my $file = $entry->{file};
+        my $path = File::Spec->catfile($entry_dir, "$entry->{name}.html");
+        my $html = Yomiuri::Web::C::Entry->show($self->c => +{ name => $entry->{name} });
+        write_file($path, $html);
+    }
 }
 
 1;

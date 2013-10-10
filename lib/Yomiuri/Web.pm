@@ -5,6 +5,8 @@ use utf8;
 
 use parent qw/Yomiuri Amon2::Web/;
 
+use Yomiuri::Web::C;
+
 use File::Spec;
 use Yomiuri::Utils ();
 

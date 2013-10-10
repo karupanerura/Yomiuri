@@ -8,11 +8,11 @@ use Yomiuri::Model::Entry;
 sub show :method {
     my ($class, $c, $args) = @_;
 
-    my $id = $args->{id};
+    my $name = $args->{name};
 
     my $entry = Yomiuri::Model::Entry->new;
     return $c->render('entry/show.tx' => +{
-        entry => $entry->get_by_id($id),
+        entry => $entry->get_by_name($name),
     });
 }
 
